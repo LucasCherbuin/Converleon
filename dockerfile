@@ -10,8 +10,12 @@ RUN npm install
 COPY . .
 # Build the app
 RUN npm run build
-# Expose port 80 for Nginx
-EXPOSE 80
+# Expose port 3000 for Nginx
+EXPOSE 3000
 
+CMD ["npm","start"]
 
 # docker build -t converleon .
+# docker run -it --rm converleon sh
+# npm run start
+#

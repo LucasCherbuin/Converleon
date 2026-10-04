@@ -1,8 +1,11 @@
 services:
   react:
     build:
-      context: .
-      dockerfile: Dockerfile
-    restart: unless-stopped
+      dockerfile: dockerfile
+    container_name: Converleon
     ports:
-      - "8080:8080"
+      - "3000:3000"
+    env_file:
+      - .env
+
+# docker compose -f docker-compose.yml logs -f
