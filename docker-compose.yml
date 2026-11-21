@@ -1,11 +1,28 @@
+# language: yaml
+version: "3.8"
+
 services:
   react:
     build:
-      dockerfile: dockerfile
-    container_name: Converleon
+      context: .
+      dockerfile: Dockerfile
+    container_name: converleon
+    volumes:
+      - .:/converleon
+      - /converleon/node_modules
     ports:
       - "3000:3000"
     env_file:
       - .env
+    command: >
+      /bin/sh -c "cd /converleon &&
+                  if [ ! -f package.json ]; then echo 'ERROR: package.json missing in /converleon'; ls -la /converleon; exit 1; fi &&
+                  if [ ! -f node_modules/.bin/craco ]; then npm install --frozen-lockfile; fi &&
+                  npm start"
 
-# docker compose -f docker-compose.yml logs -f
+volumes:
+  node_modules: {}
+
+  # docker-compose down
+  # docker-compose build
+  # docker-compose up -d
